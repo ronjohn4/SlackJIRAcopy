@@ -14,6 +14,7 @@ def CreateIssue(project, summary, description):
             "issuetype": {
                 "name": "Story"
             }
+
         }
     }
     url = 'https://levelsbeyond.atlassian.net/rest/api/2/issue/'
@@ -88,4 +89,3 @@ if __name__ == "__main__":
     description = sourceissue['fields']['description']
 
     CreateIssue(project,summary,description)
-
