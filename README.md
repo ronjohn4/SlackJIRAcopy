@@ -4,4 +4,5 @@ Slackbot that takes a JIRA key and a JIRA project.  This then replicates the key
 @jiracp SourceJiraKey TargetJiraProject
 
 @jiracp ABC-123 UXT
+
 This will copy ticket ABC-123 to the UXT project
