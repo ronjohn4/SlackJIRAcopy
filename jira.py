@@ -52,7 +52,7 @@ def ParseParms(parms):
 
 
 def GetAuth():
-    return ('rjohnson', 'Miter9le')
+    return ('username', 'password')
 
 
 
