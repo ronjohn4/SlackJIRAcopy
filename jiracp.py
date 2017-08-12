@@ -24,13 +24,13 @@ def CreateIssue(project, summary, description):
             }
         }
     }
-    print(payload)
     url = 'https://levelsbeyond.atlassian.net/rest/api/2/issue/'
     response = requests.post(url, data=json.dumps(payload), auth=GetAuth(), headers={'content-type':'application/json'})
-    print(response)
+
     if response.status_code == 201:
         return True
-    return False
+    else:
+        return False
 
 
 def GetKey(key):
@@ -40,7 +40,8 @@ def GetKey(key):
 
     if 'total' in json_return and json_return['total'] == 1:
         return json_return['issues'][0]
-    return False
+    else:
+        return False
 
 
 def VerifyProject(project):
@@ -50,23 +51,23 @@ def VerifyProject(project):
 
     if 'key' in json_return and json_return['key'] == project:
         return True
-    return False
+    else:
+        return False
 
 def ParseParms(parms):
     parmlist = parms.split()
     if len(parmlist) == 2:
         return parmlist[0], parmlist[1]
-    return None, None
+    else:
+        return None, None
 
 
 def GetAuth():
-    return ('rjohnson', 'Miter9le')
+    return ('username', 'password')
 
 
 def handle_command(command, channel):
     key, project = ParseParms(command)
-    print(key)
-    print(project)
 
     if key:
         if project and VerifyProject(project):
@@ -97,13 +98,12 @@ def parse_slack_output(slack_rtm_output):
         for output in output_list:
             if output and 'text' in output and AT_BOT in output['text']:
                 # return text after the @ mention, whitespace removed
-                return output['text'].split(AT_BOT)[1].strip().upper(), \
-                       output['channel']
+                return output['text'].split(AT_BOT)[1].strip().upper(), output['channel']
     return None, None
 
 
 if __name__ == "__main__":
-    READ_WEBSOCKET_DELAY = 1 # 1 second delay between reading from firehose
+    READ_WEBSOCKET_DELAY = 1
     if slack_client.rtm_connect():
         print("JIRAcp connected and running!")
         while True:
